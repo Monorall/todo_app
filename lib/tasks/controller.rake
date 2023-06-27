@@ -1,0 +1,2 @@
+namespace :controller do
+end
