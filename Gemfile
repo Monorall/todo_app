@@ -17,6 +17,8 @@ gem 'devise'
 
 gem 'bootstrap', '~> 5.0', '>= 5.0.2'
 
+gem 'responders', '~> 3.0'
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 

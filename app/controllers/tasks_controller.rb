@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  respond_to :html, :js
   before_action :authenticate_user!
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
@@ -14,6 +15,8 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task = current_user.tasks.find(params[:id])
+    respond_with(@task)
   end
 
   def create
@@ -28,11 +31,9 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
-      redirect_to @task, notice: 'Task was successfully updated.'
-    else
-      render :edit
-    end
+    @task = current_user.tasks.find(params[:id])
+    @task.update(task_params)
+    respond_with(@task)
   end
 
   def destroy
