@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :toggle_status]
   def index
     @tasks = current_user.tasks
+    @task = Task.new
   end
 
   def show
@@ -23,6 +23,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_path, notice: 'Task was successfully created.'
     else
+      @tasks = current_user.tasks
       render :new
     end
   end
