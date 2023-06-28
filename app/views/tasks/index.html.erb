@@ -19,8 +19,10 @@
     <%= form.submit "Create new task", class: 'btn btn-primary mb-5' %>
   <% end %>
 
-  <h2 class="mb-5">Your Tasks</h2>
-
+  <h2 class="mb-4">Your Tasks</h2>
+  <% if @total_tasks > 4 %>
+    <%= will_paginate @tasks, renderer: WillPaginate::ActionView::BootstrapLinkRenderer if @tasks.count > @tasks.per_page %>
+  <% end %>
   <div class="row">
     <div class="col-6">
       <h4 class="mb-4">Incomplete Tasks</h4>
@@ -83,6 +85,8 @@
           </div>
         </div>
       <% end %>
+
     </div>
+
   </div>
 </div>
