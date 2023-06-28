@@ -1,27 +1,76 @@
-<h1>Tasks</h1>
+<div class="container my-5 background">
+  <%= form_with model: Task.new, local: true do |form| %>
+    <div class="form-group ">
+      <%= form.label :title %>
+      <%= form.text_field :title, class: 'form-control mb-2' %>
+    </div>
 
-<table>
-  <thead>
-  <tr>
-    <th>Title</th>
-    <th>Completed</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @tasks.each do |task| %>
-    <tr>
-      <td><%= task.title %></td>
-      <td><%= task.completed ? 'Yes' : 'No' %></td>
-      <td><%= link_to 'Show', task %></td>
-      <td><%= link_to 'Edit', edit_task_path(task) %></td>
-      <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
+    <%= form.submit "Create new task", class: 'btn btn-primary mb-5' %>
   <% end %>
-  </tbody>
-</table>
+  <h2 class="mb-5">Your Tasks</h2>
 
-<br>
+  <div class="row">
+    <div class="col-6">
+      <h4 class="mb-4">Incomplete Tasks</h4>
+      <% @tasks.where(status: false).each do |task| %>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title"><%= task.title %></h5>
+            <div class="card-text d-flex justify-content-between">
+              <%= form_with url: toggle_status_task_path(task), method: :patch do %>
+                <%= submit_tag 'Toggle Status', class: 'btn btn-success' %>
+              <% end %>
 
-<%= link_to 'New Task', new_task_path %>
+              <div>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#editTask<%= task.id %>" aria-expanded="false" aria-controls="editTask<%= task.id %>">
+                  Edit
+                </button>
+
+                <%= form_with url: task_path(task), method: :delete, remote: true, class: 'd-inline' do %>
+                  <%= submit_tag 'Delete', data: { confirm: 'Are you sure you want to delete this task?' }, class: 'btn btn-danger' %>
+                <% end %>
+
+                <div class="collapse" id="editTask<%= task.id %>">
+                  <%= form_with model: task, local: true do |form| %>
+                    <%= form.label :title %>
+                    <%= form.text_field :title, class: 'form-control' %>
+                    <%= form.submit 'Update Task', class: 'btn btn-secondary mt-2' %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-6">
+      <h4 class="mb-4">Completed Tasks</h4>
+      <% @tasks.where(status: true).each do |task| %>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title <%= 'completed-task' if task.status %>"><%= task.title %></h5>
+            <div class="card-text d-flex justify-content-between">
+              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#editTask<%= task.id %>" aria-expanded="false" aria-controls="editTask<%= task.id %>">
+                Edit
+              </button>
+
+              <%= form_with url: task_path(task), method: :delete, remote: true, class: 'd-inline' do %>
+                <%= submit_tag 'Delete', data: { confirm: 'Are you sure you want to delete this task?' }, class: 'btn btn-danger' %>
+              <% end %>
+
+              <div class="collapse" id="editTask<%= task.id %>">
+                <%= form_with model: task, local: true do |form| %>
+                  <%= form.label :title %>
+                  <%= form.text_field :title, class: 'form-control' %>
+                  <%= form.submit 'Update Task', class: 'btn btn-secondary mt-2' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
