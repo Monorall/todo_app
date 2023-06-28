@@ -7,7 +7,7 @@
 
 <p>
   <strong>Completed:</strong>
-  <%= @task.completed ? 'Yes' : 'No' %>
+  <%= @task.status ? 'Yes' : 'No' %>
 </p>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |

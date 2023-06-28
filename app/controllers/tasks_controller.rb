@@ -18,9 +18,10 @@ class TasksController < ApplicationController
 
   def create
     @task = current_user.tasks.new(task_params)
+    @task.status = false
 
     if @task.save
-      redirect_to @task, notice: 'Task was successfully created.'
+      redirect_to tasks_path, notice: 'Task was successfully created.'
     else
       render :new
     end
@@ -35,9 +36,18 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    @task = current_user.tasks.find(params[:id])
     @task.destroy
-    redirect_to tasks_url, notice: 'Task was successfully destroyed.'
+    redirect_to tasks_path, notice: 'Task was successfully destroyed.'
   end
+
+
+  def toggle_status
+    @task = Task.find(params[:id])
+    @task.update(status: !@task.status)
+    redirect_to tasks_path
+  end
+
 
   private
   def set_task
@@ -45,6 +55,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :completed)
+    params.require(:task).permit(:title, :status)
   end
 end
