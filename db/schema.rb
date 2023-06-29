@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_28_084153) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_29_082613) do
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.boolean "completed"
@@ -29,6 +29,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_28_084153) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "refresh_token"
+    t.datetime "refresh_token_expires_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

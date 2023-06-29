@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
+  before_action :authenticate_request!
   before_action :set_task, only: [:show, :edit, :update, :destroy, :toggle_status]
   def index
     @tasks = current_user.tasks.paginate(page: params[:page], per_page: 4)
