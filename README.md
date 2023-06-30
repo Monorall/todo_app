@@ -1,24 +1,31 @@
-# README
+# Prerequisites
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Before you begin, you will need to have the following tools installed on your computer:
 
-Things you may want to cover:
+   * Ruby 3.1.3 
+   * Rails 7.0.5 
+   * Git
 
-* Ruby version
+   *   # Installation
+ 
+ Follow these steps to install the application on your local machine:
+ 
+ Clone the repository:
+ 
+     git clone https://github.com/Monorall/todo_app.git
 
-* System dependencies
+ Navigate to the application directory:
 
-* Configuration
+    cd todo_app
+       
+Install the required gems:
+     
+     bundle install
+     
+Run the migration:
 
-* Database creation
+     rails db:migrate  
+     
+# Used
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Аfter doing all the manipulations, you can use the application at the link http://127.0.0.1:3000.
